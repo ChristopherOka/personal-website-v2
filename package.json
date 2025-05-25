@@ -1,0 +1,23 @@
+{
+  "name": "personal-website-v2",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && tsx ./src/render.ts && tsc && vite build",
+    "preview": "vite preview",
+    "watch": "npx nodemon --watch src --ext html,ts --exec \"npx tsc src/components/*.ts --watch && npx tsx src/render.ts\""
+  },
+  "devDependencies": {
+    "@types/jsdom": "^21.1.7",
+    "tsx": "^4.19.4",
+    "typescript": "~5.8.3",
+    "vite": "^6.3.5"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.6",
+    "jsdom": "^26.1.0",
+    "tailwindcss": "^4.1.6"
+  }
+}

@@ -1,0 +1,71 @@
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+@theme {
+  --font-inter: "Inter", sans-serif;
+  --color-dark: #444444;
+  --color-blue: #239cfe;
+  --color-purple: #ad15ff;
+  --color-orange: #ff7f1a;
+  --shadow-default: 0px 4px 8px -1px rgba(0, 0, 0, 0.25);
+  --animate-fade-out: fade-out 2s ease;
+  --animate-wiggle: wiggle 1s ease;
+  --animate-card-flip: card-flip 0.8s ease;
+  @keyframes fade-out {
+    to {
+      opacity: 0%;
+    }
+  }
+  @keyframes wiggle {
+    0%,
+    100% {
+      transform: none;
+    }
+    30% {
+      transform: translateY(-75%);
+    }
+  }
+
+  @keyframes card-flip {
+    0%,
+    100% {
+      transform: rotateY(0deg);
+    }
+    30% {
+      transform: translateX(110%) translateY(-40px) rotate(20deg);
+    }
+    35% {
+      transform: translateX(110%) translateY(-40px) rotate(20deg);
+    }
+  }
+}
+
+@layer base {
+  h2 {
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 2rem;
+  }
+}
+
+@layer theme {
+  .subtitle {
+    color: var(--color-gray-600);
+    font-size: var(--text-sm);
+    font-style: italic;
+  }
+  .click-animation {
+    @apply absolute animate-fade-out -translate-x-1/2 text-blue text-sm;
+  }
+
+  .wiggle-container.hovered .wiggle-character {
+    @apply animate-wiggle;
+  }
+  .wiggle-character {
+    @apply transition-colors duration-1000;
+  }
+  .colourful {
+    @apply transition-colors;
+  }
+}
