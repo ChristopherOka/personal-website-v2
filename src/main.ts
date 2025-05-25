@@ -79,16 +79,18 @@ function clickAnimation(e: TouchEvent | MouseEvent) {
     animatedDiv.style.setProperty("left", pointerX.toString() + "px");
     animatedDiv.style.setProperty("top", pointerY.toString() + "px");
     animatedDiv.style.setProperty("rotate", (Math.random() - 0.5) * 20 + "deg");
+    const x = (Math.random() - 0.7) * 80;
+    const y = (Math.random() - 0.7) * 80;
     animatedDiv.style.setProperty(
       "translate",
-      (Math.random() - 0.5) * 80 +
-        20 +
-        "px " +
-        (Math.random() - 0.5) * 80 +
-        20 +
-        "px",
+      `${x + (x > 0 ? 20 : -20)}px ${y + (y > 0 ? 20 : -20)}px`,
     );
-    animatedDiv.className = "click-animation";
+    animatedDiv.style.setProperty(
+      "color",
+      BASE_COLOUR_LIST[Math.floor(Math.random() * BASE_COLOUR_LIST.length)],
+    );
+    animatedDiv.className =
+      "click-animation pointer-events-none text-sm font-bold";
     animatedDiv.innerHTML =
       CLICK_WORDS[Math.floor(Math.random() * CLICK_WORDS.length)];
     document.body.appendChild(animatedDiv);
@@ -155,6 +157,9 @@ function convertToColourfulCharacters(id: string) {
   }
 }
 
+let pauseCarousel = false;
+let pauseTimeout: NodeJS.Timeout;
+
 function flipCardsForwards() {
   const cards = document.querySelectorAll(".card");
   const activeCard = document.querySelector(
@@ -197,7 +202,6 @@ function flipCardsBackwards() {
   setTimeout(() => {
     lastCard.style.setProperty("z-index", "0");
   }, 300);
-
   // Update order
   for (let i = 0; i < cards.length; i++) {
     const card = cards[i] as HTMLDivElement;
@@ -227,10 +231,33 @@ function setupCards() {
   const forwardsButton = document.getElementById("card-forwards-button");
   const backwardsButton = document.getElementById("card-backwards-button");
   if (!forwardsButton || !backwardsButton) return;
-  forwardsButton.onclick = flipCardsForwards;
-  backwardsButton.onclick = flipCardsBackwards;
+  forwardsButton.onclick = () => {
+    pauseCarousel = true;
+    flipCardsForwards();
+    if (pauseTimeout) clearTimeout(pauseTimeout);
+    pauseTimeout = setTimeout(() => {
+      pauseCarousel = false;
+    }, 10000);
+  };
+  backwardsButton.onclick = () => {
+    pauseCarousel = true;
+    flipCardsBackwards();
+    if (pauseTimeout) clearTimeout(pauseTimeout);
+    pauseTimeout = setTimeout(() => {
+      pauseCarousel = false;
+    }, 10000);
+  };
+}
+
+function carouselCards() {
+  setInterval(() => {
+    if (!pauseCarousel) {
+      flipCardsForwards();
+    }
+  }, 3000);
 }
 
 convertToWigglyText("name");
 convertToColourfulCharacters("socials-header");
 setupCards();
+carouselCards();
