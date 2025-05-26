@@ -202,6 +202,7 @@ function flipCardsBackwards() {
   setTimeout(() => {
     lastCard.style.setProperty("z-index", "0");
   }, 300);
+
   // Update order
   for (let i = 0; i < cards.length; i++) {
     const card = cards[i] as HTMLDivElement;
@@ -212,7 +213,9 @@ function flipCardsBackwards() {
       card.setAttribute("data-card-order", "0");
     } else {
       card.setAttribute("data-card-order", (order + 1).toString());
-      card.style.setProperty("z-index", (-(order + 1)).toString());
+      setTimeout(() => {
+        card.style.setProperty("z-index", (-(order + 1)).toString());
+      }, 300);
     }
   }
 
