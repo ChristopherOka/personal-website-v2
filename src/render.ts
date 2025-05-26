@@ -10,7 +10,6 @@ function main() {
 
   const dom = new JSDOM(contentHtml);
   const components = dom.window.document.querySelectorAll("[data-component]");
-  moveComponentsToFile();
   renderComponents(components);
 
   fs.writeFileSync("index.html", dom.serialize());
@@ -24,16 +23,17 @@ function renderComponents(components: NodeListOf<Element>) {
       console.error("No component name found");
       return;
     }
-    const componentHtml = getComponentHtml(componentName);
-    component.outerHTML = componentHtml;
+    // const componentHtml = getComponentHtml(componentName);
+    // component.outerHTML = componentHtml;
   });
 }
 
-export function getComponentHtml(componentName: string) {
-  const filePath = searchFileWithoutExtension("src/components", componentName, [
-    "ts",
-  ]);
-}
+// export function getComponentHtml(componentName: string) {
+//   const filePath = searchFileWithoutExtension("src/components", componentName, [
+//     "ts",
+//   ]);
+//   return ;
+// }
 
 export function getFileHtml(componentName: string) {
   const filePath = searchFileWithoutExtension("src/components", componentName, [
