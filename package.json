@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && tsx ./src/render.ts && tsc && vite build",
+    "build": "tsc && vite build",
     "preview": "vite preview",
     "watch": "npx nodemon --watch src --ext html,ts --exec \"npx tsc src/components/*.ts --watch && npx tsx src/render.ts\""
   },
